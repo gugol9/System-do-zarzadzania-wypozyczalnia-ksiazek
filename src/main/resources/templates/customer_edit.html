@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Edytuj klienta</title>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-md  navbar-dark" style="background-color: #767a3a">
+    <div class="container-fluid">
+        <div  class="navbar-header" sec:authorize="isAuthenticated()">
+            <a class="navbar-brand" >System zarządzania biblioteką</a>  <a sec:authentication="name"></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/books/list}">Książki</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link " th:href="@{/authors/list}">Autorzy</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/employees/list}">Pracownicy</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/departments/list}">Oddziały</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link active" th:href="@{/customers/list}">Klienci</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link  " th:href="@{/register}">Utwórz konto pracownika</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/logout}" th:formaction="@{/logout}" th:formmethod="post">Wyloguj</a></li>
+        </ul>
+    </div>
+</nav>
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h2> Edytuj autora</h2>
+            <div class = "card-body">
+                <form th:action="@{/customers/customer/{id} (id=${customer.id})}" th:object = "${customer}" method="POST">
+                    <div class="from-group">
+                        <label> Imię</label>
+                        <input
+                                type="text"
+                                name="firstName"
+                                th:field="*{firstName}"
+                                class="form-control"
+                                placeholder="Imię"
+                        />
+                    </div><br>
+                    <div class="from-group">
+                        <label> Nazwisko</label>
+                        <input
+                                type="text"
+                                name="lastName"
+                                th:field="*{lastName}"
+                                class="form-control"
+                                placeholder="Nazwisko"
+                        />
+                    </div><br>
+                    <div class="from-group">
+                        <label> Kraj</label>
+                        <input
+                                type="text"
+                                name="country"
+                                th:field="*{country}"
+                                class="form-control"
+                                placeholder="Kraj"
+                        />
+                    </div><br>
+                    <div class="from-group">
+                        <label> Miasto</label>
+                        <input
+                                type="text"
+                                name="city"
+                                th:field="*{city}"
+                                class="form-control"
+                                placeholder="Miasto"
+                        />
+                    </div><br>
+                    <div class="from-group">
+                        <label> Ulica</label>
+                        <input
+                                type="text"
+                                name="street"
+                                th:field="*{street}"
+                                class="form-control"
+                                placeholder="Ulica"
+                        />
+                    </div><br>
+                    <div class="from-group">
+                        <label> Data urodzenia</label>
+                        <input
+                                type="text"
+                                name="dateOfBirth"
+                                th:field="*{dateOfBirth}"
+                                class="form-control"
+                                placeholder="yyyy-mm-dd"
+                        />
+                    </div><br>
+
+                    <div class="from-group">
+                        <label> PESEL</label>
+                        <input
+                                type="text"
+                                name="pesel"
+                                th:field="*{pesel}"
+                                class="form-control"
+                                placeholder="55082533568"
+                        />
+                    </div><br>
+
+
+
+                    <div class="from-group">
+                        <label> Płeć</label>
+                        <select th:field="*{gender}">
+                            <option th:value="'Mężczyzna'" th:text="Mężczyzna"></option>
+                            <option th:value="'Kobieta'" th:text="Kobieta"></option>
+                        </select>
+                    </div>
+                    <br>
+
+                    <div class = "box-footer">
+                        <button type="submit" class = "btn " style="background-color: #767a3a">
+                            Submit
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

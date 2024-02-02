@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>BIBLIOTEKA - znajdż klienta</title>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-md  navbar-dark" style="background-color: #767a3a">
+    <div class="container-fluid">
+        <div  class="navbar-header" sec:authorize="isAuthenticated()">
+            <a class="navbar-brand" >System zarządzania biblioteką</a>  <a sec:authentication="name"></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link " th:href="@{/books/list}">Książki</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/authors/list}">Autorzy</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link " th:href="@{/employees/list}">Pracownicy</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/departments/list}">Oddziały</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link active" th:href="@{/customers/list}">Klienci</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link  " th:href="@{/register}">Utwórz konto pracownika</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/logout}" th:formaction="@{/logout}" th:formmethod="post">Wyloguj</a></li>
+        </ul>
+    </div>
+</nav>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <form th:action="@{/customers/search}">
+            <label>
+                <input type="text" name="keyword" th:value="${keyword}" placeholder="Find by anythink" size="50" />
+            </label>
+            <button type="submit" class="btn-hover color-1">Search</button>
+            <button type="submit" class="btn-hover color-1">Reset</button>
+        </form>
+        <table class="table table-bordered table-sm mt-2">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Kraj</th>
+                <th>Miasto</th>
+                <th>Ulica</th>
+                <th>Data narodzin</th>
+                <th>Płeć</th>
+                <th>PESEL</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="l : ${search}" th:field="${l}">
+                <td th:text="${l.id}"></td>
+                <td th:text="${l.firstName}"></td>
+                <td th:text="${l.lastName}"></td>
+                <td th:text="${l.country}"></td>
+                <td th:text="${l.city}"></td>
+                <td th:text="${l.street}"></td>
+                <td th:text="${l.dateOfBirth}"></td>
+                <td th:text="${l.gender}"></td>
+                <td th:text="${l.pesel}"></td>
+
+                <td>
+                    <a th:href="@{/customers/edit/{id}(id=${l.id})}" class="btn btn-secondary">
+                        <i class="fas fa-user-edit ml-2 "></i>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/customers/delete/{id}(id=${l.id})}" class="btn btn-danger">
+                        <i class="fas fa-user-times ml-2"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
